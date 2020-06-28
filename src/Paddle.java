@@ -8,6 +8,7 @@ public abstract class Paddle {
     protected int top, bottom, left, right;
     protected double velocity;
     protected PApplet p;
+    protected int score;
     public float keyDown = 0;
     public float keyUp = 0;
 
@@ -20,6 +21,7 @@ public abstract class Paddle {
         left = x - WIDTH/2;
         right = x + WIDTH/2;
         velocity = -5;
+        score = 0;
     }
 
     public void draw(){
@@ -58,5 +60,17 @@ public abstract class Paddle {
 
     public int getHEIGHT(){
         return HEIGHT;
+    }
+
+    public void score(){
+        ++score;
+    }
+
+    public int getScore(){
+        return score;
+    }
+
+    public void reset(){
+        y = p.height/2;
     }
 }

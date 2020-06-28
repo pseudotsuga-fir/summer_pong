@@ -15,10 +15,10 @@ public class Bot extends Paddle{
         if(y + HEIGHT/2 > p.height){
             y = p.height - HEIGHT/2;
         }
-        if(y > ball.getY()){
+        if(y + HEIGHT/2 - 50 >= ball.getY()){
             y += botVelocity;
         }
-        else if(y < ball.getY()){
+        else if(y - HEIGHT/2 + 50 <= ball.getY()){
             y -= botVelocity;
         }
     }

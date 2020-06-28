@@ -15,15 +15,20 @@ public class Ball {
         x = p.width/2;
         y = p.height/2;
         size = 30;
-        yVelocity = initVel();
-        xVelocity = initVel();
+        xVelocity = 3;
+        yVelocity = 3;
+        initVel();
     }
 
-    public int initVel(){
-        if(Math.random() > 0.5){
-            return 5;
+    public void initVel(){
+        x = p.width/2;
+        y = p.height/2;
+        if(p.random(1) >= 0.5){
+            xVelocity *= -1;
         }
-        return -5;
+        if(p.random(1) >= 0.5){
+            yVelocity *= -1;
+        }
     }
 
     public void draw(){
@@ -76,5 +81,13 @@ public class Ball {
 
     public void setSize(int size) {
         this.size = size;
+    }
+
+    public void reset(){
+        yVelocity = 3;
+        xVelocity = 3;
+        initVel();
+        draw();
+        p.delay(500);
     }
 }

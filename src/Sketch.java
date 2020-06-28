@@ -3,7 +3,6 @@ import processing.core.PApplet;
 import java.util.ArrayList;
 
 public class Sketch extends PApplet {
-    ArrayList<Paddle> paddles;
     Paddle p1;
     Bot bot;
     Ball ball;
@@ -16,9 +15,6 @@ public class Sketch extends PApplet {
         p1 = new Player(width-50, this);
         bot = new Bot(50, this);
         ball = new Ball(this);
-        paddles = new ArrayList<Paddle>();
-        paddles.add(p1);
-        paddles.add(bot);
     }
 
     public void draw(){
@@ -26,6 +22,7 @@ public class Sketch extends PApplet {
         p1.draw();
         bot.draw();
         ball.draw();
+        showScore();
         ball.move();
         bot.move(ball);
         collisions();
@@ -58,13 +55,21 @@ public class Sketch extends PApplet {
         }
         //Left
         if(ball.getX() - ball.getSize()/2 <= 0){
-            ball.setX(ball.getSize()/2);
-            ball.setxVelocity(ball.getxVelocity()*-1);
+            p1.score();
+            p1.reset();
+            bot.reset();
+            ball.reset();
+//            ball.setX(ball.getSize()/2);
+//            ball.setxVelocity(ball.getxVelocity()*-1);
         }
         //Right
         else if(ball.getX() + ball.getSize()/2 >= width){
-            ball.setX(width - ball.getSize()/2);
-            ball.setxVelocity(ball.getxVelocity()*-1);
+            bot.score();
+            bot.reset();
+            p1.reset();
+            ball.reset();
+//            ball.setX(width - ball.getSize()/2);
+//            ball.setxVelocity(ball.getxVelocity()*-1);
         }
         //Right Paddle Collisions
         if(ball.getX() + ball.getSize()/2 >= p1.getLeft()){
@@ -81,11 +86,18 @@ public class Sketch extends PApplet {
             if(ball.getY() <= bot.getY() + bot.getHEIGHT()/2 && ball.getY() >= bot.getY() - bot.getHEIGHT()/2){
                 System.out.println("Ball xvelocity and yvelocity before hit: " + ball.getxVelocity() + " " + ball.getyVelocity());
                 ball.setyVelocity(map(ball.getY(),bot.getY()-bot.getHEIGHT()/2,bot.getY()+bot.getHEIGHT()/2,-5,5));
-                ball.setX(ball.getSize()/2 + bot.getRight());
+               // ball.setX(ball.getSize()/2 + bot.getRight());
                 ball.setxVelocity(Math.sqrt(Math.abs(-50 - (ball.getyVelocity()*ball.getyVelocity()))));
                 System.out.println("Ball xvelocity and yvelocity After hit: " + ball.getxVelocity() + " " + ball.getyVelocity());
 
             }
         }
+    }
+
+    public void showScore(){
+        fill(0);
+        textAlign(CENTER);
+        textSize(40);
+        text(bot.getScore() + " : " + p1.getScore(),width/2,50);
     }
 }
